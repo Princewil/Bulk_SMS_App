@@ -8,6 +8,7 @@ import 'constants.dart';
 import 'home/home.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final s = await getApplicationDocumentsDirectory();
   Hive.init(s.path);
   runApp(const MyApp());
