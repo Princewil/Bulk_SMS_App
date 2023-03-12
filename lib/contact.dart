@@ -25,7 +25,7 @@ class _ContactsState extends State<Contacts> {
           IconButton(
               onPressed: () async {
                 await showSheet(context, const AddNewContact(),
-                    isDismissible: false);
+                    isDismissible: true);
                 setState(() {});
               },
               icon: const Icon(Icons.add_ic_call_rounded))
@@ -122,7 +122,7 @@ class _AddNewContactState extends State<AddNewContact> {
               hintStyle: monserrat.copyWith(color: Colors.grey),
             ),
             onChanged: (v) => numbs = v,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.phone,
             maxLines: 3,
             minLines: 1,
             style: monserrat,

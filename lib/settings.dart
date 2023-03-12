@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-import 'home/home.dart';
-
 class Settings extends StatefulWidget {
   const Settings({super.key});
 
@@ -41,7 +39,7 @@ class _SettingsState extends State<Settings> {
             ),
             onTap: () async {
               await showSheet(context, const AddBulkSMSKey(),
-                  isDismissible: false);
+                  isDismissible: true);
               setState(() {});
             },
             trailing: const Icon(
@@ -115,9 +113,10 @@ class _AddBulkSMSKeyState extends State<AddBulkSMSKey> {
               hintStyle: monserrat.copyWith(color: Colors.grey),
             ),
             onChanged: (v) => bulkSMSKEY = v,
-            keyboardType: TextInputType.number,
-            maxLines: 1,
+            maxLines: 3,
+            minLines: 1,
             style: monserrat,
+            keyboardType: TextInputType.multiline,
             toolbarOptions: const ToolbarOptions(
                 copy: true, paste: true, cut: true, selectAll: true),
           ),

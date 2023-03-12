@@ -1,5 +1,4 @@
 import 'package:cmda_bulk_sms/home/home.dart';
-import 'package:cmda_bulk_sms/home/send_message.dart';
 import 'package:cmda_bulk_sms/settings.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -7,8 +6,9 @@ import 'package:http/http.dart' as http;
 class SMSClass {
   static const smsURL = 'https://www.bulksmsnigeria.com/api/v1/sms/create';
   Future<http.Response> sendSMS(List<String> phonNum, String message) async {
+    String phonNumbers = phonNum.join(',');
     Uri send = Uri.parse(
-        '$smsURL?api_token=$bulkSMSKey&from=CMDA-ESUTH&to=$phonNum&body=$message&dnd=2');
+        '$smsURL?api_token=$bulkSMSKey&from=CMDA-ESUTH&to=$phonNumbers&body=$message&dnd=2');
     var response = await http.post(send);
     return response;
   }

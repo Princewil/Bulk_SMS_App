@@ -68,7 +68,7 @@ class SendMessage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Add new contact(s)', style: monserrat),
+          Text('Send a new message', style: monserrat),
           const SizedBox(height: 20),
           TextFormField(
             autofocus: true,
@@ -103,19 +103,22 @@ class SendMessage extends StatelessWidget {
             color: primaryColor,
             animateOnTap: false,
             onPressed: () async {
-              if (mssg.isEmpty || bulkSMSKey.isEmpty || contactsList.isEmpty) {
-                Get.showSnackbar(const GetSnackBar(
-                  title: 'You are missing something.',
-                  message:
-                      "it's either BulkSMSKey is empty or your contact list is empty or you have'nt inputted any message.",
-                  backgroundColor: Colors.red,
-                  duration: Duration(seconds: 5),
-                ));
-                return;
-              }
-              controller.start();
               try {
+                if (mssg.isEmpty ||
+                    bulkSMSKey.isEmpty ||
+                    contactsList.isEmpty) {
+                  Get.showSnackbar(const GetSnackBar(
+                    title: 'You are missing something.',
+                    message:
+                        "it's either BulkSMSKey is empty or your contact list is empty or you have'nt inputted any message.",
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 5),
+                  ));
+                  return;
+                }
+                controller.start();
                 final res = await SMSClass().sendSMS(contactsList, mssg);
+                print(res.body);
                 controller.reset();
                 final date = DateTime.now().toString();
                 final data = MessageHistory(
@@ -126,9 +129,10 @@ class SendMessage extends StatelessWidget {
                 var _ = await HiveClass().getMessageHistory();
                 kMssg?.change(_);
                 Get.showSnackbar(GetSnackBar(
-                  title: res.statusCode.toString(),
-                  message: ' ',
+                  title: 'Message sent successfully',
+                  message: 'Total recepients: ${contactsList.length}',
                   duration: const Duration(seconds: 3),
+                  backgroundColor: primaryColor,
                 ));
                 await Future.delayed(const Duration(seconds: 5));
                 Get.back();
